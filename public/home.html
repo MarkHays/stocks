@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Finder Home</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+
+            </div>
+            <div class="col-6">
+                <form id="stockNameForm">
+                    Stock Ticker Name: <br>
+                    <input id = "stockName" type="text" name="stockName">
+                    <input id = "submit-btn" type="submit">
+
+                </form>
+            </div>
+            <div class="col-3">
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+<script>
+  
+
+    $("#submit-btn").on("click", function(event ){
+        event.preventDefault();
+        console.log("results");
+        $.ajax({
+            url: "https://api.iextrading.com/1.0/stock/" + $("#stockName").val() + "/price",
+            method: "GET"
+        }).then(function (results) {
+            console.log(results);
+        });
+    });
+
+
+
+</script>
+
+</html>
