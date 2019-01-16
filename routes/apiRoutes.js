@@ -15,11 +15,15 @@ module.exports = function(app) {
     var body = req.body;
     var symbol = body.symbol;
     var price = body.price;
-    var userId = body.userId;
+    var user_Id = body.userId;
 
-    db.
-
-
+    db.Users.findAll({
+      where : {
+        user_Id : user_Id
+      }
+    }).then(function(user){
+      console.log(user);
+    });
     db.Example.create(req.body).then(function(dbExample) {
       res.json(dbExample);
     });
