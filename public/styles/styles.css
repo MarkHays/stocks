@@ -1,3 +1,33 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+h1 {
+  color: black;
+}
+
+h3 {
+  font-family: "Dosis", sans-serif;
+  font-weight: bold;
+  color: #00c055;
+}
+
+h4 {
+  color: black;
+}
+
+.button {
+  width: 100px;
+  height: 30px;
+  float: right;
+  position: relative;
+  bottom: 40px;
+  color: white;
+  background-color: #00c055;
+  border: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: black;
+}
