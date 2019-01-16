@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "xyzto35649#@*",
-    "database": "exampledb",
+    "database": "stockAppdb",
     "host": "localhost",
     "dialect": "mysql"
   },
