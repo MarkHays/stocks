@@ -8,8 +8,18 @@ module.exports = function(app) {
     });
   });
 
+
+
   // Create a new example
-  app.post("/api/examples", function(req, res) {
+  app.post("/api/purchase/", function(req, res) {
+    var body = req.body;
+    var symbol = body.symbol;
+    var price = body.price;
+    var userId = body.userId;
+
+    db.
+
+
     db.Example.create(req.body).then(function(dbExample) {
       res.json(dbExample);
     });
