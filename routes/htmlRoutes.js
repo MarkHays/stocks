@@ -3,12 +3,12 @@ var db = require("../models");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
+    // db.Positions.findAll({}).then(function(dbExamples) {
+      res.render("index");
         //msg: "Welcome to Stock X",
-        examples: dbExamples
-      });
-    });
+  //       examples: dbExamples
+  //     });
+  //   });
   });
 
   // Load example page and pass in an example by id

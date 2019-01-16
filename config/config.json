@@ -1,16 +1,16 @@
 {
   "development": {
-    "username": "root",
-    "password": "xyzto35649#@*",
-    "database": "exampledb",
-    "host": "localhost",
+    "username": "josh",
+    "password": "josh",
+    "database": "stockAppdb",
+    "host": "104.154.253.41",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "xyzto35649#@*",
+    "username": "josh",
+    "password": "josh",
     "database": "testdb",
-    "host": "localhost",
+    "host": "104.154.253.41",
     "dialect": "mysql",
     "logging": false
   },
