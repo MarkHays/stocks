@@ -1,9 +1,20 @@
-.list-group-item {
+/*.list-group-item {
   line-height: 2.5;
+}*/
+.header {
+  padding: 10px;
+  background: black;
 }
 
-h1 {
-  color: black;
+#headerTitle {
+  color: white;
+  position: relative;
+  left: 30px;
+}
+
+.container {
+  position: relative;
+  top: 50px;
 }
 
 h3 {
@@ -17,7 +28,21 @@ h4 {
 }
 
 #newUserBtn {
-  background-color: black;
+  width: 100px;
+  height: 30px;
+  float: right;
+  margin: 0;
+  color: black;
+  background-color:white;
+  border: none;
+  border-radius: 5px;
+}
+
+#newUserBtn:hover {
+  color: black;
+  background-color: white;
+  border: 2px solid black;
+  
 }
 
 .button {

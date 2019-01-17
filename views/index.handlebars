@@ -1,27 +1,29 @@
 <div id="home">
+ <div class="header">
+   <h1 id="headerTitle">Stock X</h1>
+    <button id="newUserBtn">New User</button>
+ </div>
   <div class="container">
     <div class="row">
       <div class="col-8 offset-2">
         <!--<h1>{{msg}}</h1>-->
-        <header>
-          <h1>Stock X</h1>
-        </header><br>
-        <button id="newUserBtn">New User</button>
         <h3>AAPL</h3>
         <h4>$153.10</h4>
-         <button id="buyAAPL" class="button">Buy</button>
+        <button id="buyAAPL" class="button">Buy</button>
         <hr>
         <h3>TSLA</h3>
         <h4>$345.48</h4>
-         <button id="buyTSLA" class="button">Buy</button>
+        <button id="buyTSLA" class="button">Buy</button>
         <hr>
         <h3>NVDA</h3>
         <h4>$150.00</h4>
-         <button id="buyNVDA" class="button">Buy</button>
+        <button id="buyNVDA" class="button">Buy</button>
         <hr>
         <br>
-         <label for="inputName"><h5>Add Stock</h5></label>
-            <input type="text" id="inputName" placeholder="Search...">
+        <label for="inputName">
+          <h5>Add Stock</h5>
+        </label>
+        <input type="text" id="inputName" placeholder="Search...">
         <!--<form class="clearfix mb-4" action="POST">
           <div class="form-group">
             <label for="stockSymbol">Stock Symbol</label>
@@ -60,7 +62,7 @@
     $.ajax({
       url: "api/develop/reset",
       method: "POST",
-      
+
     }).then(function (res) {
       console.log(res);
     });
@@ -81,12 +83,12 @@
       method: "POST",
       data: {
         user_id: "f",
-        symbol: $("#stockSymbol").val() ,
+        symbol: $("#stockSymbol").val(),
         price: purchasedata,
-        quantity : 1
+        quantity: 1
       }
     }).then(function (res) {
-      
+
       console.log(res);
     });
   };
