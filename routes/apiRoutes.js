@@ -3,12 +3,28 @@ var Users = db.Users;
 var Positions = db.Positions;
 
 module.exports = function (app) {
-  // Get all examples
-  app.get("/api/examples", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
-      res.json(dbExamples);
+  // Get all users for user selection in frontend
+  app.get("/api/users", function (req, res) {
+    db.Users.findAll({}).then(function (records) {
+      res.json(records);
     });
   });
+
+  // get all positions for fun!
+  app.get("/api/positions", function (req, res) {
+    db.Positions.findAll({include:[Users]}).then(function (records) {
+      res.json(records);
+    });
+  });
+
+  //get position for speicific user_id
+  app.get("/api/positions/:user_id", function (req, res) {
+    var userId = req.params.user_id
+    db.Positions.findAll({where: {user_id: userId},include:[Users]}).then(function (records) {
+      res.json(records);
+    });
+  });
+
 
   function enterNewPosition (user, quantity, symbol){
     if (quantity < 1){
