@@ -1,12 +1,11 @@
-/*.list-group-item {
-  line-height: 2.5;
-}*/
+/* HOMEPAGE */
 .header {
   padding: 12px;
   background: black;
 }
 
 #headerTitle {
+  font-family: "Dosis", sans-serif;
   color: white;
   position: relative;
   left: 30px;
@@ -24,9 +23,11 @@ h3 {
 }
 
 h4 {
+  font-family: "Dosis", sans-serif;
   color: black;
 }
 
+/* new user button (top right corner) */
 #newUserBtn {
   width: 100px;
   height: 30px;
@@ -48,6 +49,7 @@ h4 {
   
 }
 
+/* "buy" buttons */
 .button {
   width: 100px;
   height: 30px;
@@ -62,4 +64,23 @@ h4 {
 
 .button:hover {
   background-color: black;
+}
+
+/* CREATE NEW USER */
+
+.createUserForm {
+  position: relative;
+  top: 50px;
+}
+
+/* submit button */
+#submitNewUser {
+  font-family: sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+h1 {
+  font-family: "Dosis", sans-serif;
+  color: black;
 }

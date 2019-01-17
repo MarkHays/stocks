@@ -11,6 +11,11 @@ module.exports = function(app) {
     //});
   });
 
+  // Loads new user form page
+  app.get("/new-user", function(req, res) {
+    res.render("createUser");
+  });
+
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
     db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExamples) {
