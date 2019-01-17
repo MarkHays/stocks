@@ -2,7 +2,7 @@
   line-height: 2.5;
 }*/
 .header {
-  padding: 10px;
+  padding: 12px;
   background: black;
 }
 
@@ -31,7 +31,10 @@ h4 {
   width: 100px;
   height: 30px;
   float: right;
-  margin: 0;
+  position: relative;
+  bottom: 40px;
+  right: 10px;
+
   color: black;
   background-color:white;
   border: none;
