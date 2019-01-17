@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
       user_id: DataTypes.STRING,
       quantity: DataTypes.INTEGER,
       symbol: DataTypes.STRING
+    }, {
+      timestamps : false
     });
-
     return Positions;
   };
