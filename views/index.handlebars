@@ -20,14 +20,16 @@
         <hr>
         <!--<form class="clearfix mb-4" action="POST">
           <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
+            <label for="stockSymbol">Stock Symbol</label>
+            <input type="text" id="stockSymbol" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
+            <input type="integer" id="quantity" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
           </div>
           <button id="submit" class="btn btn-primary float-right">Submit</button>
+
+          <button id="reset" class="btn btn-primary float-right">Reset</button>
+
+
+
         </form>
         <h3>Examples:</h3>
         <ul id="example-list" class="list-group">
@@ -44,4 +46,46 @@
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+
+
+<script>
+
+  $("#reset").on("click", function (event) {
+    event.preventDefault();
+
+    $.ajax({
+      url: "api/develop/reset",
+      method: "POST",
+      
+    }).then(function (res) {
+      console.log(res);
+    });
+  });
+
+  $("#submit").on("click", function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: "https://api.iextrading.com/1.0/stock/" + $("#stockSymbol").val() + "/price",
+      method: "GET"
+    }).then(debugPurchase);
+  });
+
+  function debugPurchase(purchasedata) {
+    console.log(purchasedata);
+    $.ajax({
+      url: "api/purchase/",
+      method: "POST",
+      data: {
+        user_id: "f",
+        symbol: $("#stockSymbol").val() ,
+        price: purchasedata,
+        quantity : 1
+      }
+    }).then(function (res) {
+      
+      console.log(res);
+    });
+  };
+
+
+</script>
