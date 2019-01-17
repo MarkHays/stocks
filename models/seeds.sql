@@ -1,10 +1,15 @@
 use stockappdb;
 
 
-insert into USERS (user_id, budget) values ("f",100);
+/*insert into USERS (user_id, budget) values ("f",300);
 
-select * from Users;
+
 
 insert into POSITIONS (user_id, quantity, symbol) values ("f",1,"AAPL");
+insert into POSITIONS (user_id, quantity, symbol) values ("f",1,"NVDA");
+insert into POSITIONS (user_id, quantity, symbol) values ("f",1,"SPY");*/
+
+
+select * from Users;
 
 select * from POSITIONS;
