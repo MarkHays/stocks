@@ -6,8 +6,5 @@ module.exports = function(sequelize, DataTypes) {
     }, {
       timestamps : false
     });
-   /* Positions.associate = function(models){
-        Positions.hasMany(models.Users,{foreignKey:"username",constraint:true});
-      }*/
     return Positions;
   };
