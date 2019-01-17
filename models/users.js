@@ -5,8 +5,5 @@ module.exports = function(sequelize, DataTypes) {
         },{
           timestamps : false
         });
-     /* Users.associate = function(models){
-        Users.belongsTo(models.Positions,{foreignKey:"username"});
-      }*/
       return Users;
   };
