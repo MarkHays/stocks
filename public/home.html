@@ -22,8 +22,8 @@
             <div class="col-6">
                 <form id="stockNameForm">
                     Stock Ticker Name: <br>
-                    <input id = "stockName" type="text" name="stockName">
-                    <input id = "submit-btn" type="submit">
+                    <input id="stockName" type="text" name="stockName">
+                    <input id="submit-btn" type="submit">
 
                 </form>
             </div>
@@ -36,23 +36,5 @@
 
 </body>
 
-
-<script>
-  
-
-    $("#submit-btn").on("click", function(event ){
-        event.preventDefault();
-        console.log("results");
-        $.ajax({
-            url: "https://api.iextrading.com/1.0/stock/" + $("#stockName").val() + "/price",
-            method: "GET"
-        }).then(function (results) {
-            console.log(results);
-        });
-    });
-
-
-
-</script>
 
 </html>
