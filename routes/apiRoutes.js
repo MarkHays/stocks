@@ -9,6 +9,16 @@ module.exports = function (app) {
       res.json(records);
     });
   });
+  
+  app.post("/api/users",function (req,res){
+      var user = req.body;
+    db.Users.create({user_id: user.user_id,name: user.name, budget: user.budget}).then(function(record){
+      console.log("user id:" + record.user_id + " name: " + record.name + " budget: " + record.budget);
+      res.status(200).end();
+    }).catch(function(err){
+      res.status(500).end();
+    });
+  });
 
   // get all positions for fun!
   app.get("/api/positions", function (req, res) {
