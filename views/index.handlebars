@@ -30,18 +30,6 @@
 
 <script>
 
-  $("#reset").on("click", function (event) {
-    event.preventDefault();
-
-    $.ajax({
-      url: "api/develop/reset",
-      method: "POST",
-
-    }).then(function (res) {
-      console.log(res);
-    });
-  });
-
   $("#submit").on("click", function (event) {
     event.preventDefault();
     $.ajax({

@@ -18,6 +18,7 @@
                 </div>
 
                 <button id="submitNewUser" type="submit" class="btn btn-success btn-sm">Submit</button>
+                <button id="cancel" type="submit" class="btn btn-success btn-sm">Cancel</button>
             </form>
         </div>
     </div>
@@ -34,8 +35,9 @@
         user_id: $("#inputId").val(),
         budget: $("#inputBudget").val()
     }
-
-    console.log(newUserData);
+    $("#cancel").on("click",function(event){
+        location.href="/";
+    })
 
     $.post("/api/users", newUserData)
     .then(function(data){
