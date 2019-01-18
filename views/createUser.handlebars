@@ -1,6 +1,7 @@
 <div class="createUserForm">
     <div class="row">
         <div class="col-8 offset-2">
+            <div id="result"></div>
             <h1>New User</h1>
             <form>
                  <div class="form-group">
@@ -36,12 +37,14 @@
 
     console.log(newUserData);
 
-    $.post("/new-user", newUserData)
+    $.post("/api/users", newUserData)
     .then(function(data){
-        console.log(data);
+        //if status 200 refresh back to homepage.
+        location.href = "/";
     }).catch(
        function(error) {
-       console.log(error); 
+            console.log(error); 
+            $("#result").text("Unable to create user.");
        })
   });
 </script>

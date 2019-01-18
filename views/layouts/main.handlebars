@@ -18,6 +18,10 @@
 </head>
 
 <body>
+   <div class="header">
+      <h1 id="headerTitle">Stock X</h1>
+      <button id="newUserBtn">New User</button>
+   </div>
    <!-- SCRIPTS -->
   <!-- JQuery -->
   <script type="text/javascript" src="/bootstrap/js/jquery-3.3.1.min.js"></script>
@@ -29,7 +33,13 @@
   <script type="text/javascript" src="/bootstrap/js/mdb.min.js"></script>
   {{{body}}}
   
-       	<footer class="stocksFooter">
+  <script>
+      $("#newUserBtn").on("click",function(event){
+         event.preventDefault();
+         location.href = "/createUser";
+      });
+  </script>
+   <footer class="stocksFooter">
 		<div class="footer-copyright">
 			<div class="container">
 				<span class="blue-text text-darken-4 left">© 2019 Stock X</span>
