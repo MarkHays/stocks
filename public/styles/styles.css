@@ -11,7 +11,7 @@
   left: 30px;
 }
 
-.container {
+.stocksContainer {
   position: relative;
   top: 50px;
 }
@@ -96,7 +96,54 @@ h4 {
   border-radius: 5px;
 }
 
-h1 {
+#cancel {
+  font-family: sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+h1, h5 {
   font-family: "Dosis", sans-serif;
   color: black;
 }
+
+/* USER POSITION PAGE */
+#currentUser {
+  position: relative;
+  top: 50px;
+}
+
+.investSubheading {
+  font-family: "Dosis", sans-serif;
+  color: white;
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.subheading {
+  font-family: "Dosis", sans-serif;
+  color: white;
+  background-color: #00c055;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.numberofShares {
+  color: gray;
+}
+
+#priceAAPL, #priceTSLA {
+  background-color: black;
+}
+
+#priceAAPL:hover, #priceTSLA:hover {
+  background-color: #00c055;
+}
+
+/* FOOTER */
+.stocksFooter {
+  position: absolute;
+  bottom: auto 0;
+}
+
