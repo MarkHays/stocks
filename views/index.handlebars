@@ -1,20 +1,18 @@
 <div id="home">
- 
+  <div class="col-md-5">
+    <canvas id="myChart"></canvas>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-8 offset-2">
-        <h3>AAPL</h3>
-        <h4>$153.10</h4>
-        <button id="buyAAPL" class="button">Buy</button>
-        <hr>
-        <h3>TSLA</h3>
-        <h4>$345.48</h4>
-        <button id="buyTSLA" class="button">Buy</button>
-        <hr>
-        <h3>NVDA</h3>
-        <h4>$150.00</h4>
-        <button id="buyNVDA" class="button">Buy</button>
-        <hr>
+        {{#if positions}}
+          {{#each positions}}
+            <h3>{{symbol}}</h3>
+            <h4>$0.00</h4>
+            <button id="buy{{symbol}}" class="button">Buy</button>
+            <hr>        
+          {{/each}}  
+        {{/if}}
         <br>
         <label for="inputName">
           <h5>Add Stock</h5>
@@ -36,7 +34,7 @@
       url: "https://api.iextrading.com/1.0/stock/" + $("#stockSymbol").val() + "/price",
       method: "GET"
     }).then(debugPurchase);
-  });
+  })
 
   function debugPurchase(purchasedata) {
     console.log(purchasedata);
@@ -53,6 +51,7 @@
 
       console.log(res);
     });
-  };
+  }
 
+  drawChart(["fb","aapl","tsla"]);  
 </script>
