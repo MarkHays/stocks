@@ -55,6 +55,7 @@
 
       $("#userSelection").change(function(){
          sessionStorage.setItem("user_id",$("#userSelection").val());
+         location.href = "/api/positions/" + $("#userSelection").val();
       });
 
       //mdbootstrap library already loaded in main page.
