@@ -30,11 +30,15 @@ module.exports = function (app) {
   //get position for speicific user_id
   app.get("/api/positions/:user_id", function (req, res) {
     var userId = req.params.user_id
-    db.Positions.findAll({where: {user_id: userId},include:[Users]}).then(function (records) {
-      res.json(records);
+    db.Users.findOne({where:{user_id: userId}}).then(function(user){
+      db.Positions.findAll({where: {user_id: userId},include:[Users]}).then(function (records) {
+      res.render("userPosition",{user_id: user.get("user_id"),
+                                 name: user.get("name"),
+                                 budget:user.get("budget"),
+                                 positions:records});
+      });
     });
   });
-
 
   function enterNewPosition (user, quantity, symbol){
     if (quantity < 1){
