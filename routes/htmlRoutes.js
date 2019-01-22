@@ -1,10 +1,17 @@
 var db = require("../models");
+var request = require('request');
 
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    res.render("index");
+    req.redirect("/creatUser");
+
+      
+   
   });
+
+
+
 
   // Loads new user form page
   app.get("/createUser", function(req, res) {

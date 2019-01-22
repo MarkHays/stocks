@@ -10,6 +10,8 @@ module.exports = function (app) {
     });
   });
   
+
+  
   app.post("/api/users",function (req,res){
       var user = req.body;
     db.Users.create({user_id: user.user_id,name: user.name, budget: user.budget}).then(function(record){
