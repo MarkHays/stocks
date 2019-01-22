@@ -1,5 +1,5 @@
 <div id="home">
- 
+
   <div class="container">
     <div class="row">
       <div class="col-8 offset-2">
@@ -16,10 +16,17 @@
         <button id="buyNVDA" class="button">Buy</button>
         <hr>
         <br>
-        <label for="inputName">
-          <h5>Add Stock</h5>
-        </label>
-        <input type="text" id="inputName" placeholder="Search...">
+
+        <div>
+          <label for="inputName">
+            <h5>Search</h5>
+          </label>
+          <input type="text" id="inputName" placeholder="Search...">
+          <button class="button searchButton">Q</button>
+        </div>
+
+
+
       </div>
     </div>
   </div>
@@ -29,6 +36,31 @@
 
 
 <script>
+  $(".searchButton").on("click", function (event) {
+    event.preventDefault();
+    console.log("click");
+    var name = $("#inputName").val();
+    var redirect = "";
+
+    $.ajax({
+      url: "https://api.iextrading.com/1.0/stock/" + name + "/quote",
+      method: "GET",
+      statusCode: {
+        404: function () {
+          redirect = "*";
+        }
+      }
+    }).then(function (response) {
+
+      if (redirect === "*") {
+        location.href = href;
+      } else {
+        location.href = "/stocks/" + name;
+      }
+    });
+  });
+
+
 
   $("#submit").on("click", function (event) {
     event.preventDefault();

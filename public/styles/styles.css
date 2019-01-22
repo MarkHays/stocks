@@ -78,6 +78,11 @@ h4 {
   border-radius: 5px;
 }
 
+.searchButton {
+  bottom: 0px;
+}
+ 
+
 .button:hover {
   background-color: black;
 }

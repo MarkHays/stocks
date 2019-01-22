@@ -11,6 +11,13 @@ module.exports = function(app) {
     res.render("createUser");
   });
 
+  app.get("/stocks/:symbol", function(req,res){
+    console.log("WORKING");
+    res.render("stockPage", {
+      symbol : req.params.symbol
+    });
+  });
+
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
     db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExamples) {
@@ -24,4 +31,8 @@ module.exports = function(app) {
   app.get("*", function(req, res) {
     res.render("404");
   });
+
+
+
+
 };
