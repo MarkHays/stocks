@@ -1,7 +1,10 @@
 <div id="home">
-
-  <div class="container">
+ 
+  <div class="stocksContainer">
     <div class="row">
+      <div class="col-8 offset-2">
+        <canvas id="myChart"></canvas>
+      </div>
       <div class="col-8 offset-2">
         <h3>AAPL</h3>
         <h4>$153.10</h4>
@@ -16,17 +19,11 @@
         <button id="buyNVDA" class="button">Buy</button>
         <hr>
         <br>
-
-        <div>
-          <label for="inputName">
-            <h5>Search</h5>
-          </label>
-          <input type="text" id="inputName" placeholder="Search...">
-          <button class="button searchButton">Q</button>
-        </div>
-
-
-
+        <label for="inputName">
+          <h5>Add Stock</h5>
+        </label>
+        <input type="text" id="inputName" placeholder="Search...">
+        <button id = "search" class  = "button submitButton">Q</button>
       </div>
     </div>
   </div>
@@ -36,7 +33,7 @@
 
 
 <script>
-  $(".searchButton").on("click", function (event) {
+    $("#search").on("click", function (event) {
     event.preventDefault();
     console.log("click");
     var name = $("#inputName").val();
@@ -59,10 +56,7 @@
       }
     });
   });
-
-
-
-  $("#submit").on("click", function (event) {
+    $("#submit").on("click", function (event) {
     event.preventDefault();
     $.ajax({
       url: "https://api.iextrading.com/1.0/stock/" + $("#stockSymbol").val() + "/price",
@@ -86,5 +80,5 @@
       console.log(res);
     });
   };
-
+  drawChart(["fb","aapl","tsla"]);  
 </script>
