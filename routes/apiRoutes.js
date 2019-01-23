@@ -79,11 +79,16 @@ module.exports = function (app) {
     }
   }
 
-  function changeMoney(user, price, buying) {
+  function changeMoney(user, price, b) {
     var i = 1;
-    if (buying) i = -1;
+
+    if (b) {
+      i = -1;
+    }
     var budget = user.budget;
     var newBudget = budget + i * price;
+
+
     if (newBudget < 0) {
 
       console.log("you cant afford that");
@@ -118,7 +123,7 @@ module.exports = function (app) {
     var symbol = body.symbol;
     var price = body.price;
     var user_id = body.user_id;
-    var buying = body.buying;
+    var buying = body.buying == 'true';
 
     Users.findAll({
       where: {
@@ -126,6 +131,7 @@ module.exports = function (app) {
       }
     }).then(function (users) {
       var user = users[0];
+
       changeMoney(user, price, buying);
 
       Positions.findAll({
@@ -141,7 +147,6 @@ module.exports = function (app) {
           changePosition(userPositions[0], 1, buying);
         }
       });
-      res.return({ user });
     });
   });
 
