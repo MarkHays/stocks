@@ -1,5 +1,32 @@
 <div id="home">
- 
+
+  <div class="userPositionContainer">
+    <div class="row">
+      <div class="col-8 offset-2">
+        <div>
+          <h1 id="currentUser">{{name}}</h1><br><br>
+          <h3 id="currentUserId">ID: {{user_id}}</h3><br>
+        </div>
+        <div>
+          <h3 class="investSubheading">Investing:</h3>
+          <h4 id="investAmount">${{budget}}</h4><br>
+        </div>
+        <h3 class="subheading">Your Stocks:</h3>
+        <hr>
+        <div>
+          {{#each positions}}
+          <h3 class="stockSymbol">{{symbol}}</h3>
+          <h5 class="numberofShares">Shares: {{quantity}}</h5>
+          <button id="price{{symbol}}" class="button">Buy</button><br><br>
+          <button id="sell{{symbol}}" class="button">Sell</button>
+          <hr>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div class="stocksContainer">
     <div class="row">
       <div class="col-8 offset-2">
@@ -57,5 +84,5 @@
       console.log(res);
     });
   };
-  drawChart(["fb","aapl","tsla"]);  
+  drawChart(["fb", "aapl", "tsla"]);  
 </script>
