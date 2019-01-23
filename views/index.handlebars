@@ -1,5 +1,5 @@
 <div id="home">
- 
+
   <div class="stocksContainer">
     <div class="row">
       <div class="col-8 offset-2">
@@ -23,6 +23,7 @@
           <h5>Add Stock</h5>
         </label>
         <input type="text" id="inputName" placeholder="Search...">
+        <button id="searchButton" class="button">Q</button>
       </div>
     </div>
   </div>
@@ -32,30 +33,8 @@
 
 
 <script>
-fd
-  $("#submit").on("click", function (event) {
-    event.preventDefault();
-    $.ajax({
-      url: "https://api.iextrading.com/1.0/stock/" + $("#stockSymbol").val() + "/price",
-      method: "GET"
-    }).then(debugPurchase);
-  });
 
-  function debugPurchase(purchasedata) {
-    console.log(purchasedata);
-    $.ajax({
-      url: "api/purchase/",
-      method: "POST",
-      data: {
-        user_id: "f",
-        symbol: $("#stockSymbol").val(),
-        price: purchasedata,
-        quantity: 1
-      }
-    }).then(function (res) {
 
-      console.log(res);
-    });
-  };
-  drawChart(["fb","aapl","tsla"]);  
+ 
+  drawChart(["fb", "aapl", "tsla"]);  
 </script>
