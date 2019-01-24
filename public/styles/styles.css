@@ -67,6 +67,65 @@ h4 {
 
 /* "buy" buttons */
 
+.searchButton {
+  width: 100px;
+  height: 30px;
+  float: right;
+  position: relative;
+  bottom: 0px;
+  color: white;
+  background-color: #00c055;
+  border: none;
+  border-radius: 5px;
+}
+
+.border {
+  border-style: solid;
+  border-radius: 2px;
+  border-color: #00c055;
+}
+
+.button {
+  width: 100px;
+  height: 30px;
+  float: right;
+  position: relative;
+  bottom: 40px;
+  color: white;
+  background-color: #00c055;
+  border: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: black;
+}
+
+/* CREATE NEW USER */
+
+.createUserForm {
+  position: relative;
+  top: 50px;
+}
+
+/* submit button */
+#submitNewUser {
+  font-family: sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+#cancel {
+  font-family: sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+h1, h5 {
+  font-family: "Dosis", sans-serif;
+  color: black;
+}
+
 /* USER POSITION */
 #currentUser {
   position: relative;
@@ -139,10 +198,16 @@ h1, h5 {
   font-family: "Dosis", sans-serif;
   color: black;
 }
+/* STOCK CONTAINER */
+
+.stocksContainer {
+  margin: 5%;
+  padding: 20px;
+}
+
 
 /* FOOTER */
 .stocksFooter {
-  position: absolute;
   bottom: auto 0;
 }
 
