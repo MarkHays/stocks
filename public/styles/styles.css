@@ -28,16 +28,19 @@ h4 {
 }
 
 /* user selection*/
-#userSelection {
-  width: 100px;
-  height: 30px;
-  float: right;
-  position: relative;
-  bottom: 40px;
-  right: 10px;
-  margin-left: 5px;
+#loginHeading {
   color: black;
-  background-color:white;
+  position: relative;
+  left: 160px;
+}
+#userSelection {
+  width: 200px;
+  height: 60px;
+  position: relative;
+  left: 150px;
+  margin-left: 5px;
+  color:white;
+  background-color:black;
   border: none;
   border-radius: 5px;
 }
@@ -86,11 +89,9 @@ h4 {
 }
 
 .button {
-  width: 100px;
+  width: 70px;
   height: 30px;
   float: right;
-  position: relative;
-  bottom: 40px;
   color: white;
   background-color: #00c055;
   border: none;
@@ -157,20 +158,6 @@ h1, h5 {
 }
 
 #price:hover {
-  background-color: #00c055;
-}
-
-/* Add Stock button */
-#submit {
-  width: 50px;
-  height: 30px;
-  color: white;
-  background-color:black;
-  border: none;
-  border-radius: 5px;
-}
-
-#submit:hover {
   background-color: #00c055;
 }
 
