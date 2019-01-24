@@ -33,7 +33,7 @@ module.exports = function (app) {
 
     db.Users.findOne({ where: { user_id: userId } }).then(function (user) {
       db.Positions.findAll({ where: { user_id: userId }, include: [Users] }).then(function (records) {
-        res.render("userPosition", {
+        res.render("index", {
           user_id: user.get("user_id"),
           name: user.get("name"),
           budget: user.get("budget"),
