@@ -14,12 +14,15 @@
                 <canvas id="myChart"></canvas>
             </div>
             <div class="col-8 offset-2">
+                
 
                 <div id="symbol">{{symbol}}</div>
                 <button class="button float-right tradeButton">Sell</button>
                 <button class="button float-right tradeButton">Buy</button>
 
             </div>
+
+
             <div class="col-8 offset-2">
                 <div class="container">
                     <div class="row border">
@@ -150,7 +153,7 @@
     $(".tradeButton").on("click", function (event) {
         event.preventDefault();
         var buying = true;
-        console.log($(this).text());
+       
         if ($(this).text() === "Sell") buying = false;
         $.ajax({
             url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/price",
@@ -166,6 +169,7 @@
     });
 
     function processPurchase(purchasedata, buying) {
+         console.log($(this).text());
         $.ajax({
             url: "/api/purchase/",
             method: "POST",
