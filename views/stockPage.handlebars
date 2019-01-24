@@ -1,0 +1,186 @@
+<div id="home">
+
+    <div class = "stocksContainer">
+
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div>
+                    <h3 class="investSubheading">Buying Power:</h3>
+                    <h4 id="investAmount">${{budget}}</h4><br>
+                </div>
+            </div>
+
+            <div class="col-8 offset-2">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-8 offset-2">
+
+                <div id="symbol">{{symbol}}</div>
+                <button class="float-right tradeButton">Sell</button>
+                <button class="float-right tradeButton">Buy</button>
+
+            </div>
+            <div class="col-8 offset-2">
+                <div class="container">
+                    <div class="row border">
+                        <div class="col-6">
+                            <table class="clearfix ">
+                                <tr>
+
+                                    <th>
+                                        Volume
+                                    </th>
+                                    <th id="vol">
+
+                                    </th>
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        Average Volume
+                                    </th>
+                                    <th id="avgVol">
+
+                                    </th>
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        Market Cap
+                                    </th>
+                                    <th id="mktCap">
+
+                                    </th>
+                                </tr>
+                                <tr>
+
+                                    <th>
+                                        P/E Ratio
+                                    </th>
+                                    <th id="peRatio">
+
+                                    </th>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <th>
+                                        Open
+                                    </th>
+                                    <th id="open">
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Today's High
+                                    </th>
+                                    <th id="high">
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Today's Low
+                                    </th>
+                                    <th id="low">
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        52 Wk High
+                                    </th>
+                                    <th id="52wkhigh">
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        52 Wk Low
+                                    </th>
+                                    <th id="52wklow">
+
+                                    </th>
+                                </tr>
+
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script>
+    console.log($("#symbol").text());
+    drawChart([$("#symbol").text()]);
+    var quote = "";
+
+    $.ajax({
+        url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/quote",
+        method: "GET",
+    }).then(function (response) {
+        quote = response;
+        console.log(quote);
+        $("#vol").text(quote.latestVolume);
+        $("#avgVol").text(quote.avgTotalVolume);
+        $("#mktCap").text((quote.marketCap / 1000000) + " M");
+        $("#peRatio").text(quote.peRatio);
+        $("#open").text(quote.open);
+        $("#close").text(quote.close);
+        $("#high").text(quote.high);
+        $("#low").text(quote.low);
+        $("#52wkhigh").text(quote.week52High);
+        $("#52wklow").text(quote.week52Low);
+    });
+
+
+    $(".tradeButton").on("click", function (event) {
+        event.preventDefault();
+        var buying = true;
+        console.log($(this).text());
+        if ($(this).text() === "Sell") buying = false;
+        $.ajax({
+            url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/price",
+            method: "GET",
+            statusCode: {
+                "404": function () {
+                    location.href = "*";
+                }
+            }
+        }).then(function (response) {
+            processPurchase(response, buying);
+        });
+    });
+
+    function processPurchase(purchasedata, buying) {
+        $.ajax({
+            url: "/api/purchase/",
+            method: "POST",
+            data: {
+                user_id: $("#userSelection").val(),
+                symbol: $("#stockSymbol").val(),
+                price: purchasedata,
+                buying, buying,
+                quantity: 1
+
+            }
+        }).then(function (res) {
+
+            console.log(res);
+        });
+    };
+
+</script>
