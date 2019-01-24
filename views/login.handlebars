@@ -11,3 +11,11 @@
         </div>
     </div>
 </body>
+
+ <script>
+    $("#userSelection").change(function(){
+        console.log( $("#userSelection").val());
+         sessionStorage.setItem("user_id",$("#userSelection").val());
+         location.href = "/api/positions/" + $("#userSelection").val();
+      });
+<script>
