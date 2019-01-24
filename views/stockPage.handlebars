@@ -12,6 +12,9 @@
 
             <div class="col-8 offset-2">
                 <canvas id="myChart"></canvas>
+                <button id="1m" value="1m">Last Month</button>
+                <button id="6m" value="6m">Last 6 Month</button>
+                <button id="1y" value="1y">Last Year</button>
             </div>
             <div class="col-8 offset-2">
 
@@ -125,9 +128,14 @@
 
 <script>
     console.log($("#symbol").text());
-    drawChart([$("#symbol").text()]);
+    drawChart([$("#symbol").text()],"1m");
     var quote = "";
+    var period = "";
 
+    $("#1m").on("click",function(event){drawChart([$("#symbol").text()],$("#1m").val())});
+    $("#6m").on("click",function(event){drawChart([$("#symbol").text()],$("#6m").val())});
+    $("#1y").on("click",function(event){drawChart([$("#symbol").text()],$("#1y").val())});
+    
     $.ajax({
         url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/quote",
         method: "GET",
