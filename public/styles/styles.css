@@ -66,48 +66,8 @@ h4 {
 }
 
 /* "buy" buttons */
-.button {
-  width: 100px;
-  height: 30px;
-  float: right;
-  position: relative;
-  bottom: 40px;
-  color: white;
-  background-color: #00c055;
-  border: none;
-  border-radius: 5px;
-}
 
-.button:hover {
-  background-color: black;
-}
-
-/* CREATE NEW USER */
-
-.createUserForm {
-  position: relative;
-  top: 50px;
-}
-
-/* submit button */
-#submitNewUser {
-  font-family: sans-serif;
-  font-size: 15px;
-  border-radius: 5px;
-}
-
-#cancel {
-  font-family: sans-serif;
-  font-size: 15px;
-  border-radius: 5px;
-}
-
-h1, h5 {
-  font-family: "Dosis", sans-serif;
-  color: black;
-}
-
-/* USER POSITION PAGE */
+/* USER POSITION */
 #currentUser {
   position: relative;
   top: 50px;
@@ -139,6 +99,45 @@ h1, h5 {
 
 #price:hover {
   background-color: #00c055;
+}
+
+/* Add Stock button */
+#submit {
+  width: 50px;
+  height: 30px;
+  color: white;
+  background-color:black;
+  border: none;
+  border-radius: 5px;
+}
+
+#submit:hover {
+  background-color: #00c055;
+}
+
+/* CREATE NEW USER */
+
+.createUserForm {
+  position: relative;
+  top: 50px;
+}
+
+/* submit button */
+#submitNewUser {
+  font-family: sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+#cancel {
+  font-family: sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+h1, h5 {
+  font-family: "Dosis", sans-serif;
+  color: black;
 }
 
 /* FOOTER */
