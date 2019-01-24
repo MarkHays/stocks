@@ -126,7 +126,7 @@ module.exports = function (app) {
     var price = body.price;
     var user_id = body.user_id;
     var buying = body.buying == 'true';
-
+    
     Users.findAll({
       where: {
         user_id: user_id

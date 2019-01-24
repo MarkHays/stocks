@@ -169,12 +169,12 @@
     });
 
     function processPurchase(purchasedata, buying) {
-         console.log($(this).text());
+  
         $.ajax({
             url: "/api/purchase/",
             method: "POST",
             data: {
-                user_id: $("#userSelection").val(),
+                user_id: sessionStorage.getItem("user_id"),
                 symbol: $("#symbol").text(),
                 price: purchasedata,
                 buying, buying,
