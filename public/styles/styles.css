@@ -66,6 +66,25 @@ h4 {
 }
 
 /* "buy" buttons */
+
+.searchButton {
+  width: 100px;
+  height: 30px;
+  float: right;
+  position: relative;
+  bottom: 0px;
+  color: white;
+  background-color: #00c055;
+  border: none;
+  border-radius: 5px;
+}
+
+.border {
+  border-style: solid;
+  border-radius: 2px;
+  border-color: #00c055;
+}
+
 .button {
   width: 100px;
   height: 30px;
@@ -141,9 +160,16 @@ h1, h5 {
   background-color: #00c055;
 }
 
+/* STOCK CONTAINER */
+
+.stocksContainer {
+  margin: 5%;
+  padding: 20px;
+}
+
+
 /* FOOTER */
 .stocksFooter {
-  position: absolute;
   bottom: auto 0;
 }
 
