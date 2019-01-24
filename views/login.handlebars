@@ -11,7 +11,7 @@
 
 
             </div>
-            <button id="changeUser" class = "button">
+            <button id="login" class="button">
                Login
             </button>
          </div>
@@ -36,9 +36,10 @@
       })
    });
 
-   $("#changeUser").on("click", function () {
-      console.log("click");
+   $("#login").on("click", function () {
       sessionStorage.setItem("user_id", $("#userSelection").val());
-      location.href = "/api/positions/" + $("#userSelection").val();
+      window.moveToHomePage($("#userSelection").val());
    });
+
+   
 </script>

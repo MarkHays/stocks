@@ -45,9 +45,9 @@
 
     $("#tradeButton").on("click", function (event) {
         event.preventDefault();
-        var userId = $("#userSelection").val();
+
         var symbol = $("#symbol").val();
-            console.log(userId);
+  
         $.ajax({
             url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
             method: "GET",
