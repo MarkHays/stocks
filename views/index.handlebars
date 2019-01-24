@@ -1,31 +1,39 @@
 <div id="home">
- 
-  <div class="stocksContainer">
+
+  <div class="userPositionContainer">
     <div class="row">
       <div class="col-8 offset-2">
-        <canvas id="myChart"></canvas>
-      </div>
-      <div class="col-8 offset-2">
-        <h3>AAPL</h3>
-        <h4>$153.10</h4>
-        <button id="buyAAPL" class="button">Buy</button>
+        <div>
+          <h1 id="currentUser">{{name}}</h1><br><br>
+          <h3 id="currentUserId">ID: {{user_id}}</h3><br>
+        </div>
+        <div>
+          <h3 class="investSubheading">Investing:</h3>
+          <h4 id="investAmount">${{budget}}</h4><br>
+        </div>
+        <h3 class="subheading">Your Stocks:</h3>
         <hr>
-        <h3>TSLA</h3>
-        <h4>$345.48</h4>
-        <button id="buyTSLA" class="button">Buy</button>
-        <hr>
-        <h3>NVDA</h3>
-        <h4>$150.00</h4>
-        <button id="buyNVDA" class="button">Buy</button>
-        <hr>
-        <br>
-        <label for="inputName">
+        <div>
+          {{#each positions}}
+          <h3 class="stockSymbol">{{symbol}}</h3>
+          <h5 class="numberofShares">Shares: {{quantity}}</h5>
+          <button id="price{{symbol}}" class="button">Buy</button><br><br>
+          <button id="sell{{symbol}}" class="button">Sell</button>
+          <hr>
+          {{/each}}
+        </div>
+         <label for="inputName">
           <h5>Add Stock</h5>
         </label>
         <input type="text" id="inputName" placeholder="Search...">
+        <button id = "submit">
+          Q
+        </button>
       </div>
     </div>
   </div>
+
+
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -57,5 +65,5 @@
       console.log(res);
     });
   };
-  drawChart(["fb","aapl","tsla"]);  
+  drawChart(["fb", "aapl", "tsla"]);  
 </script>
