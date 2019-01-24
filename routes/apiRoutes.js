@@ -32,7 +32,7 @@ module.exports = function (app) {
     var userId = req.params.user_id
     db.Users.findOne({where:{user_id: userId}}).then(function(user){
       db.Positions.findAll({where: {user_id: userId},include:[Users]}).then(function (records) {
-      res.render("userPosition",{user_id: user.get("user_id"),
+      res.render("index",{user_id: user.get("user_id"),
                                  name: user.get("name"),
                                  budget:user.get("budget"),
                                  positions:records});
