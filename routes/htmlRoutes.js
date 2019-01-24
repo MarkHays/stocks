@@ -3,7 +3,7 @@ var db = require("../models");
 module.exports = function (app) {
   // Load index page
   app.get("/", function (req, res) {
-    res.render("index");
+    res.render("login");
   });
 
   // Loads new user form page
@@ -11,10 +11,6 @@ module.exports = function (app) {
     res.render("createUser");
   });
 
-  // Loads user position page
-  app.get("/userPosition", function (req, res) {
-    res.render("userPosition");
-  });
 
   // Load example page and pass in an example by id
   app.get("/example/:id", function (req, res) {

@@ -27,9 +27,9 @@
          <label for="inputName">
           <h5>Add Stock</h5>
         </label>
-        <input type="text" id="inputName" placeholder="Search...">
+        <input type="text" id="symbol" placeholder="Search...">
 
-        <button id="searchButton" class="button">Q</button>
+        <button id="tradeButton" class="button">Q</button>
 
       </div>
     </div>
@@ -43,12 +43,13 @@
 
 <script>
 
-    $(".tradeButton").on("click", function (event) {
+    $("#tradeButton").on("click", function (event) {
         event.preventDefault();
         var userId = $("#userSelection").val();
- 
+        var symbol = $("#symbol").val();
+    
         $.ajax({
-            url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/price",
+            url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
             method: "GET",
             statusCode: {
                 "404": function () {
@@ -56,11 +57,9 @@
                 }
             }
         }).then(function (response) {
-            location.href = "/stocks/" + $("#inputName").val();
+          console.log(response);
+            location.href = "/stocks/" + symbol;
         });
     });
-
-
-
-  drawChart(["fb", "aapl", "tsla"]);  
+ 
 </script>
