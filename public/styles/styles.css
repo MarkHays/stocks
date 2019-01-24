@@ -152,11 +152,11 @@ h1, h5 {
   color: gray;
 }
 
-#priceAAPL, #priceTSLA {
+#price {
   background-color: black;
 }
 
-#priceAAPL:hover, #priceTSLA:hover {
+#price:hover {
   background-color: #00c055;
 }
 
