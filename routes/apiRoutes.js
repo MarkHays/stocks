@@ -148,6 +148,8 @@ module.exports = function (app) {
         } else {
           changePosition(userPositions[0], 1, buying);
         }
+        console.log(userPositions[0]);
+        res.json(userPositions[0]);
       });
     });
   });
