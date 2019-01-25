@@ -14,15 +14,19 @@
   <link href="/bootstrap/css/mdb.min.css" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="/bootstrap/css/style.css" rel="stylesheet">
-   <title>Home Page</title>
+  <title>Home Page</title>
 </head>
 
 <body>
-   <div class="header">
-      <h1 id="headerTitle">Stock X</h1>
-      <button id="newUserBtn">New User</button>
-   </div>
-   <!-- SCRIPTS -->
+  <div class="header">
+    <h1 id="headerTitle">Stock X</h1>
+    <ul>
+       <li><a class="navBar" href="../">Home</a></li>
+      <li><a class="navBar" href="../createUser">New User</a></li>
+       <li><a class="navBar" href="../stocks/:symbol">Stocks</a></li>
+    </ul>
+  </div>
+  <!-- SCRIPTS -->
   <!-- JQuery -->
   <script type="text/javascript" src="/bootstrap/js/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -31,91 +35,91 @@
   <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="/bootstrap/js/mdb.min.js"></script>
-  
-  
+
+
   <script>
-      $("#newUserBtn").on("click",function(event){
-         event.preventDefault();
-         location.href = "/createUser";
-      });
-      $.ajax({
-         url: "/api/users",
-         method: "GET",
-      }).then(function (res) {
-         var my_user_id = sessionStorage.user_id;
-         res.forEach(function(user){
-            var option = $("<option>").val(user.user_id).text(user.user_id);
-            if(my_user_id == option.val()){
-               option.attr("selected","selected");
-            }
-            $("#userSelection").append(option);
-         })
-      });
+    $("#newUserBtn").on("click", function (event) {
+      event.preventDefault();
+      location.href = "/createUser";
+    });
+    $.ajax({
+      url: "/api/users",
+      method: "GET",
+    }).then(function (res) {
+      var my_user_id = sessionStorage.user_id;
+      res.forEach(function (user) {
+        var option = $("<option>").val(user.user_id).text(user.user_id);
+        if (my_user_id == option.val()) {
+          option.attr("selected", "selected");
+        }
+        $("#userSelection").append(option);
+      })
+    });
 
-      $("#userSelection").change(function(){
-         sessionStorage.setItem("user_id",$("#userSelection").val());
-         location.href = "/api/positions/" + $("#userSelection").val();
-      });
+    $("#userSelection").change(function () {
+      sessionStorage.setItem("user_id", $("#userSelection").val());
+      location.href = "/api/positions/" + $("#userSelection").val();
+    });
 
-      //mdbootstrap library already loaded in main page.
-  //to draw char, it will require a canavs tag lineChart, then call js function drawChart(["fb","aapl","tsla"]);  
-     function drawChart(symbols){
+    //mdbootstrap library already loaded in main page.
+    //to draw char, it will require a canavs tag lineChart, then call js function drawChart(["fb","aapl","tsla"]);  
+    function drawChart(symbols) {
 
-     $.ajax({url:"https://api.iextrading.com/1.0/stock/market/batch?symbols="+ symbols.join(",") + "&types=quote,news,chart&range=6m",method:"get"})
-        .then(function(result){
-        console.log(result);
-        data = [];
-        count = 0;
-        for(var symbol in result){
-          dates = [];
-          prices = [];
-          borderOpac = 1;
-          bgColor = 0.2;
-          chartItems = result[symbol].chart;
-          for(var i = 0; i < chartItems.length;i+=15){
-            dates.push(chartItems[i].date);
-            prices.push(chartItems[i].close);
-          };
-          chartConfig ={
+      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=6m", method: "get" })
+        .then(function (result) {
+          console.log(result);
+          data = [];
+          count = 0;
+          for (var symbol in result) {
+            dates = [];
+            prices = [];
+            borderOpac = 1;
+            bgColor = 0.2;
+            chartItems = result[symbol].chart;
+            for (var i = 0; i < chartItems.length; i += 15) {
+              dates.push(chartItems[i].date);
+              prices.push(chartItems[i].close);
+            };
+            chartConfig = {
               label: symbol,
               data: prices,
-              backgroundColor: setColor(count,0.2),
-              borderColor: setColor(count,1),
+              backgroundColor: setColor(count, 0.2),
+              borderColor: setColor(count, 1),
               borderWidth: 1
-          }
-          //change color for next symbol
-          count += 1 % 6;
-          data.push(chartConfig);  
-        };
-      
-
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: dates,
-            datasets: data
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
             }
-          }
+            //change color for next symbol
+            count += 1 % 6;
+            data.push(chartConfig);
+          };
+
+
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: dates,
+              datasets: data
+            },
+            options: {
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }
+          });
         });
-      });
     }
 
-    function setColor(index, opacity){
+    function setColor(index, opacity) {
       colors = [`rgba(255,99,132,${opacity})`,
-                `rgba(54, 162, 235, ${opacity})`,
-                `rgba(255, 206, 86, ${opacity})`,
-                `rgba(75, 192, 192, ${opacity})`,
-                `rgba(153, 102, 255, ${opacity})`,
-                `rgba(255, 159, 64, ${opacity})`]
+      `rgba(54, 162, 235, ${opacity})`,
+      `rgba(255, 206, 86, ${opacity})`,
+      `rgba(75, 192, 192, ${opacity})`,
+      `rgba(153, 102, 255, ${opacity})`,
+      `rgba(255, 159, 64, ${opacity})`]
       return colors[index];
     }
 
@@ -124,15 +128,15 @@
   </script>
   {{{body}}}
 
-  
-   <footer class="stocksFooter">
-		<div class="footer-copyright">
-			<div class="container">
-				<span class="blue-text text-darken-4 left">© 2019 Stock X</span>
-				<a class="red-text text-darken-2 right" href="https://github.com/MarkHays/stocks">Github</a>
-			</div>
-		</div>
-	</footer>
+
+  <footer class="stocksFooter">
+    <div class="footer-copyright">
+      <div class="container">
+        <span class="blue-text text-darken-4 left">© 2019 Stock X</span>
+        <a class="red-text text-darken-2 right" href="https://github.com/MarkHays/stocks">Github</a>
+      </div>
+    </div>
+  </footer>
 
 </body>
 

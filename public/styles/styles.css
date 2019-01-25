@@ -45,27 +45,23 @@ h4 {
   border-radius: 5px;
 }
 
-/* new user button (top right corner) */
-#newUserBtn {
-  width: 100px;
-  height: 30px;
-  float: right;
-  position: relative;
-  bottom: 40px;
-  right: 10px;
-
-  color: black;
-  background-color:white;
-  border: none;
-  border-radius: 5px;
+/* NAV BAR */
+li {
+  display: inline-block;
+  padding: 10px;
+  float: none;
 }
 
+.navBar:link {
+  color: #00c055;
+}
 
-#newUserBtn:hover {
-  color: black;
-  background-color: white;
-  border: 2px solid black;
-  
+.navBar:visited {
+  color: #00c055;
+}
+
+.navBar:hover {
+  color: white;
 }
 
 /* "buy" buttons */
@@ -192,9 +188,27 @@ h1, h5 {
   padding: 20px;
 }
 
+/* BUY & SELL buttons*/
+.tradeButton {
+  width: 100px;
+  height: 30px;
+  padding: 5px, 5px;
+  margin: 5px;
+  background-color: #00c055;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.tradeButton:hover {
+  background-color: black;
+}
+
 
 /* FOOTER */
 .stocksFooter {
+  position: absolute;
   bottom: auto 0;
 }
+
 
