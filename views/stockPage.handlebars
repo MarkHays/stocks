@@ -1,6 +1,6 @@
 <div id="home">
 
-    <div class = "stocksContainer">
+    <div class="stocksContainer">
 
         <div class="row">
             <div class="col-8 offset-2">
@@ -14,11 +14,15 @@
                 <canvas id="myChart"></canvas>
             </div>
             <div class="col-8 offset-2">
-                
 
-                <div id="symbol">{{symbol}}</div>
-                <button class="button float-right tradeButton">Sell</button>
-                <button class="button float-right tradeButton">Buy</button>
+                <div>
+                    <h3 class="stockSymbol">{{symbol}}</h3>
+                    <h5 class="numberofShares">Shares: {{quantity}}</h5>
+                    <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
+                    <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
+                    <hr>
+                </div>
+
 
             </div>
 
@@ -150,41 +154,9 @@
     });
 
 
-    $(".tradeButton").on("click", function (event) {
-        event.preventDefault();
-        var buying = true;
-       
-        if ($(this).text() === "Sell") buying = false;
-        $.ajax({
-            url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/price",
-            method: "GET",
-            statusCode: {
-                "404": function () {
-                    location.href = "*";
-                }
-            }
-        }).then(function (response) {
-            processPurchase(response, buying);
-        });
-    });
 
-    function processPurchase(purchasedata, buying) {
-  
-        $.ajax({
-            url: "/api/purchase/",
-            method: "POST",
-            data: {
-                user_id: sessionStorage.getItem("user_id"),
-                symbol: $("#symbol").text(),
-                price: purchasedata,
-                buying, buying,
-                quantity: 1
 
-            }
-        }).then(function (res) {
+    $(".tradeButton").on("click", sendPurchaseRequest);
 
-            console.log(res);
-        });
-    };
 
 </script>

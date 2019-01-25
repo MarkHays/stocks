@@ -22,11 +22,9 @@
     <h1 id="headerTitle">Stock X</h1>
 
     <button id="newUserBtn">New User</button>
-
     <button class="button home"> Home </button>
     <button class="button logout">
       <a href="/">Logout</a>
-
     </button>
 
   </div>
@@ -41,20 +39,19 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="/bootstrap/js/mdb.min.js"></script>
 
-
   <script>
 
 
     $(".logout").on("click", function (event) {
       event.preventDefault();
       $.ajax({
-
         url: "/logoutUser",
         method: "POST"
       }).then(function () {
         sessionStorage.setItem("user_id","");
         location.href = "/";
       });
+
 
 
     });
@@ -67,6 +64,20 @@
     $("#newUserBtn").on("click", function (event) {
       event.preventDefault();
       location.href = "/createUser";
+    });
+
+    $.ajax({
+      url: "/api/users",
+      method: "GET",
+    }).then(function (res) {
+      var my_user_id = sessionStorage.user_id;
+      res.forEach(function (user) {
+        var option = $("<option>").val(user.user_id).text(user.user_id);
+        if (my_user_id == option.val()) {
+          option.attr("selected", "selected");
+        }
+        $("#userSelection").append(option);
+      })
     });
 
     function moveToHomePage(userID) {
@@ -147,6 +158,43 @@
 
     //use this function update linechart.
     //drawChart(["fb","aapl","tsla"]);   
+
+
+    function sendPurchaseRequest(event) {
+      event.preventDefault();
+      var parent = $(this).parent();
+      var buying = true;
+      var symbol = parent.children(".stockSymbol").text();
+      if ($(this).text() === "Sell") buying = false;
+      $.ajax({
+        url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
+        method: "GET",
+        statusCode: {
+          "404": function () {
+            location.href = "*";
+          }
+        }
+      }).then(function (response) {
+        processPurchase(parent,response, buying, symbol);
+      });
+
+    };
+    function processPurchase(parent,purchasedata, buying, symbol) {
+
+      $.ajax({
+        url: "/api/purchase/",
+        method: "POST",
+        data: {
+          user_id: sessionStorage.getItem("user_id"),
+          symbol: symbol,
+          price: purchasedata,
+          buying, buying,
+          quantity: 1
+        }
+      }).then(function (res) {
+         parent.children(".numberOfShares").text(res.quantity);
+      });
+    };
   </script>
   {{{body}}}
 
