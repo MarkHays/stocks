@@ -22,8 +22,10 @@
     <h1 id="headerTitle">Stock X</h1>
 
     <button id="newUserBtn">New User</button>
-    <a href="/">Logout</a> |
-
+    <button class="button home"> Home </button>
+    <button class="button logout">
+      <a href="/">Logout</a>
+    </button>
 
   </div>
 
@@ -37,8 +39,28 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="/bootstrap/js/mdb.min.js"></script>
 
-
   <script>
+
+
+    $(".logout").on("click", function (event) {
+      event.preventDefault();
+      $.ajax({
+        url: "/logoutUser",
+        method: "POST"
+      }).then(function () {
+        sessionStorage.setItem("user_id","");
+        location.href = "/";
+      });
+
+
+
+    });
+
+    $(".home").on("click", function (event) {
+      event.preventDefault();
+      window.moveToHomePage(sessionStorage.getItem("user_id"));
+    });
+
     $("#newUserBtn").on("click", function (event) {
       event.preventDefault();
       location.href = "/createUser";
@@ -57,6 +79,20 @@
         $("#userSelection").append(option);
       })
     });
+
+    function moveToHomePage(userID) {
+      $.ajax({
+
+        url: "/loginUser",
+        method: "POST",
+        data: {
+          userId: userID
+        }
+      }).then(function () {
+        location.href = "/index";
+      });
+    }
+
 
     //mdbootstrap library already loaded in main page.
     //to draw char, it will require a canavs tag lineChart, then call js function drawChart(["fb","aapl","tsla"]);  

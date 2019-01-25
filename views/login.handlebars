@@ -1,40 +1,45 @@
 <body>
-    <div class="stocksContainer">
+   <div class="stocksContainer">
 
-        <div class="row">
-            <div class="col-8 offset-2">
-                <h2 id="loginHeading">Login</h2>
-                <select id="userSelection">
-                    <option selected></option>
-                </select>
+      <div class="row">
+         <div class="col-8 offset-2">
+            <div>
+               <h2 id="loginHeading">Login</h2>
+               <select id="userSelection">
+
+               </select>
+
+
             </div>
-        </div>
-    </div>
+            <button id="login" class="button">
+               Login
+            </button>
+         </div>
+      </div>
+   </div>
 </body>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
-      $("#newUserBtn").on("click",function(event){
-         event.preventDefault();
-         location.href = "/createUser";
-      });
-      $.ajax({
-         url: "/api/users",
-         method: "GET",
-      }).then(function (res) {
-         var my_user_id = sessionStorage.user_id;
-         res.forEach(function(user){
-            var option = $("<option>").val(user.user_id).text(user.user_id);
-            if(my_user_id == option.val()){
-               option.attr("selected","selected");
-            }
-            $("#userSelection").append(option);
-         })
-      });
+   $.ajax({
+      url: "/api/users",
+      method: "GET",
+   }).then(function (res) {
+      var my_user_id = sessionStorage.user_id;
+      res.forEach(function (user) {
+         var option = $("<option>").val(user.user_id).text(user.user_id);
+         if (my_user_id == option.val()) {
+            option.attr("selected", "selected");
+         }
+         $("#userSelection").append(option);
+      })
+   });
 
-      $("#userSelection").change(function(){
-         sessionStorage.setItem("user_id",$("#userSelection").val());
-         location.href = "/api/positions/" + $("#userSelection").val();
-      });
+   $("#login").on("click", function () {
+      sessionStorage.setItem("user_id", $("#userSelection").val());
+      window.moveToHomePage($("#userSelection").val());
+   });
+
+   
 </script>
