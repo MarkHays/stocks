@@ -19,7 +19,7 @@
           {{#each positions}}
           <div>
             <h3 class="stockSymbol">{{symbol}}</h3>
-            <h5 class="numberOfShares">Shares: {{quantity}}</h5>
+            <h5 class="shareCount numberOfShares">Shares: {{quantity}}</h5>
             <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
             <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
             <hr>
@@ -51,7 +51,6 @@
     event.preventDefault();
     var userId = $("#userSelection").val();
     var symbol = $("#symbol").val();
-    console.log(userId);
     $.ajax({
       url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
       method: "GET",
@@ -61,9 +60,7 @@
         }
       }
     }).then(function (response) {
-      console.log(response);
       location.href = "/stocks/" + symbol;
-
     });
   });
 

@@ -51,9 +51,6 @@
         sessionStorage.setItem("user_id","");
         location.href = "/";
       });
-
-
-
     });
 
     $(".home").on("click", function (event) {
@@ -100,7 +97,6 @@
 
       $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=6m", method: "get" })
         .then(function (result) {
-          console.log(result);
           data = [];
           count = 0;
           for (var symbol in result) {
@@ -179,8 +175,9 @@
       });
 
     };
-    function processPurchase(parent,purchasedata, buying, symbol) {
 
+    function processPurchase(parent,purchasedata, buying, symbol) {
+     
       $.ajax({
         url: "/api/purchase/",
         method: "POST",
@@ -192,7 +189,7 @@
           quantity: 1
         }
       }).then(function (res) {
-         parent.children(".numberOfShares").text(res.quantity);
+         parent.children(".shareCount").text(res.quantity);
       });
     };
   </script>

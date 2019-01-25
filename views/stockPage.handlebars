@@ -17,7 +17,7 @@
 
                 <div>
                     <h3 class="stockSymbol">{{symbol}}</h3>
-                    <h5 class="numberofShares">Shares: {{quantity}}</h5>
+                    <h5 class="shareCount numberofShares">Shares: {{quantity}}</h5>
                     <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
                     <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
                     <hr>
@@ -131,12 +131,14 @@
 
 
 <script>
-    console.log($("#symbol").text());
-    drawChart([$("#symbol").text()]);
+    var symbol = $(".stockSymbol").text();
+    console.log(symbol);
+
+    drawChart([symbol]);
     var quote = "";
 
     $.ajax({
-        url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/quote",
+        url: "https://api.iextrading.com/1.0/stock/" + symbol + "/quote",
         method: "GET",
     }).then(function (response) {
         quote = response;

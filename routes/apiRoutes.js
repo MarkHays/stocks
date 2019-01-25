@@ -42,12 +42,15 @@ module.exports = function (app) {
     res.json({success : true});
 });
   app.get("/index", function (req, res) {
-   // console.log(sessionStorage.getItem("user_id"));
-   // var userId = req.params.user_id
+
     if (userId === "") throw "USER ID IS EMPTY";
     db.Users.findOne({ where: { user_id: userId } }).then(function (user) {
       db.Positions.findAll({ where: { user_id: userId }, include: [Users] }).then(function (records) {
         res.render("index", {
+
+          
+
+
           user_id: user.get("user_id"),
           name: user.get("name"),
           budget: user.get("budget"),
@@ -162,7 +165,6 @@ module.exports = function (app) {
         } else {
           changePosition(userPositions[0], 1, buying);
         }
-        console.log(userPositions[0]);
         res.json(userPositions[0]);
       });
     });
