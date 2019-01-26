@@ -23,6 +23,7 @@ module.exports = function (app) {
 
   app.get("/stocks/:symbol", function (req,res){
     var symbol = req.params.symbol;
+    
     res.render("stockPage", {
       symbol : symbol
     });

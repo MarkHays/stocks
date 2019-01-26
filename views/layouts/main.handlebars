@@ -63,20 +63,6 @@
       location.href = "/createUser";
     });
 
-    $.ajax({
-      url: "/api/users",
-      method: "GET",
-    }).then(function (res) {
-      var my_user_id = sessionStorage.user_id;
-      res.forEach(function (user) {
-        var option = $("<option>").val(user.user_id).text(user.user_id);
-        if (my_user_id == option.val()) {
-          option.attr("selected", "selected");
-        }
-        $("#userSelection").append(option);
-      })
-    });
-
     function moveToHomePage(userID) {
       $.ajax({
 

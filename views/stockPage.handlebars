@@ -17,7 +17,8 @@
 
                 <div>
                     <h3 class="stockSymbol">{{symbol}}</h3>
-                    <h5 class="shareCount numberofShares">Shares: {{quantity}}</h5>
+                    <h5>Shares: <h6 class="shareCount numberofShares">{{quantity}}</h6>
+                    </h5>
                     <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
                     <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
                     <hr>
@@ -120,9 +121,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -131,9 +129,12 @@
 
 
 <script>
-    var symbol = $(".stockSymbol").text();
-    console.log(symbol);
 
+
+
+
+
+    var symbol = $(".stockSymbol").text();
     drawChart([symbol]);
     var quote = "";
 
@@ -142,7 +143,7 @@
         method: "GET",
     }).then(function (response) {
         quote = response;
-        console.log(quote);
+
         $("#vol").text(quote.latestVolume);
         $("#avgVol").text(quote.avgTotalVolume);
         $("#mktCap").text((quote.marketCap / 1000000) + " M");
@@ -153,8 +154,31 @@
         $("#low").text(quote.low);
         $("#52wkhigh").text(quote.week52High);
         $("#52wklow").text(quote.week52Low);
-    });
 
+        $.ajax({
+            url: "/data",
+            method: "GET",
+        }).then(function (data) {
+
+            $("#investAmount").text(data.budget);
+
+            var position = data.positions.find(function (element) {
+                return element.symbol === symbol;
+            })
+
+            if (position === undefined) {
+                $(".shareCount").text(0);
+            } else {
+                $(".shareCount").text(position.quantity);
+            }
+
+
+
+
+        });
+
+
+    });
 
 
 
