@@ -218,7 +218,19 @@ h1, h5 {
   padding: 20px;
 }
 
-/* BUY & SELL buttons*/
+/* STOCK PAGE */
+button {
+  width: 100px;
+  height: 25px;
+  color: white;
+  background-color: black;
+  border: none;
+}
+
+button:hover {
+  background-color: #00c055;
+}
+
 .tradeButton {
   width: 100px;
   height: 30px;
@@ -231,6 +243,7 @@ h1, h5 {
 }
 
 .tradeButton:hover {
+  color: white;
   background-color: black;
 }
 
