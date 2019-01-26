@@ -5,15 +5,16 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link href="/bootstrap/css/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+  
   <!-- Your custom styles (optional) -->
-  <link href="/bootstrap/css/style.css" rel="stylesheet">
+  <!--link href="/bootstrap/css/style.css" rel="stylesheet"-->
   <title>Home Page</title>
 </head>
 
@@ -21,11 +22,10 @@
   <div class="header">
     <h1 id="headerTitle">Stock X</h1>
 
-     <button class="button logout">
-      <a href="/">Logout</a>
-    </button>
     <button id="newUserBtn">New User</button>
     <button class="button home"> Home </button>
+    <button class="button logout">Logout</button>
+
   </div>
 
   <!-- SCRIPTS -->
@@ -47,7 +47,7 @@
         url: "/logoutUser",
         method: "POST"
       }).then(function () {
-        sessionStorage.setItem("user_id","");
+        sessionStorage.setItem("user_id", "");
         location.href = "/";
       });
     });
@@ -82,19 +82,24 @@
 
     //mdbootstrap library already loaded in main page.
     //to draw char, it will require a canavs tag lineChart, then call js function drawChart(["fb","aapl","tsla"]);  
-    function drawChart(symbols) {
+    function drawChart(symbols, period) {
 
-      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=6m", method: "get" })
+      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=" + period, method: "get" })
         .then(function (result) {
           data = [];
           count = 0;
+          interval = {
+            "1y": 30,
+            "1m": 3,
+            "6m": 15
+          }
           for (var symbol in result) {
             dates = [];
             prices = [];
             borderOpac = 1;
             bgColor = 0.2;
             chartItems = result[symbol].chart;
-            for (var i = 0; i < chartItems.length; i += 15) {
+            for (var i = 0; i < chartItems.length; i += interval[period]) {
               dates.push(chartItems[i].date);
               prices.push(chartItems[i].close);
             };
@@ -160,13 +165,13 @@
           }
         }
       }).then(function (response) {
-        processPurchase(parent,response, buying, symbol);
+        processPurchase(parent, response, buying, symbol);
       });
 
     };
 
-    function processPurchase(parent,purchasedata, buying, symbol) {
-     
+    function processPurchase(parent, purchasedata, buying, symbol) {
+
       $.ajax({
         url: "/api/purchase/",
         method: "POST",
@@ -178,8 +183,17 @@
           quantity: 1
         }
       }).then(function (res) {
-         parent.children(".shareCount").text(res.position.quantity);
-         $("#investAmount").text(res.budget);
+
+        var classes = parent.attr("class");
+
+
+        if (res.position.quantity === 0 && classes === "position") {
+          parent.remove();
+        } else {
+          parent.children(".shareCount").text(res.position.quantity);
+        }
+        $("#investAmount").text(res.budget);
+
       });
     };
   </script>

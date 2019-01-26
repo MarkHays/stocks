@@ -43,10 +43,13 @@
     .then(function(data){
         //if status 200 refresh back to homepage.
         location.href = "/";
+        $("#result").removeClass();
+        $("#result").addClass("alert alert-success");
     }).catch(
        function(error) {
             console.log(error); 
-            $("#result").text("Unable to create user.");
+            $("#result").text(error.responseText);
+            $("#result").addClass("alert alert-danger");
        })
     });
 </script>
