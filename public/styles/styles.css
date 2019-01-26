@@ -41,6 +41,12 @@ h4 {
 }
 
 /* user selection*/
+
+#login:hover {
+  background-color: black;
+  color: white;
+}
+
 #loginHeading {
   color: black;
   position: relative;
@@ -59,23 +65,31 @@ h4 {
 }
 
 /* NAV BAR */
-li {
-  display: inline;
-  padding: 20px;
+#newUserBtn {
+  width: 100px;
+  height: 30px;
+  background-color: #00c055;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 10px;
   float: right;
 }
 
-.navBar:link {
-  color: #00c055;
+#newUserBtn:hover {
+  background-color: white;
+  color: black;
 }
 
-.navBar:visited {
-  color: #00c055;
-}
-
-.navBar:hover {
+.home, .logout {
+  width: 100px;
+  height: 30px;
+  background-color: #00c055;
   color: white;
+  border: none;
 }
+
 
 /* "buy" buttons */
 
@@ -98,17 +112,20 @@ li {
 }
 
 .button {
-  width: 70px;
+  width: 100px;
   height: 30px;
-  float: right;
   color: white;
   background-color: #00c055;
+  float: right;
   border: none;
   border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 .button:hover {
-  background-color: black;
+  background-color: white;
+  color: black;
 }
 
 /* CREATE NEW USER */

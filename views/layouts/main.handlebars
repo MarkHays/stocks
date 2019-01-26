@@ -21,12 +21,11 @@
   <div class="header">
     <h1 id="headerTitle">Stock X</h1>
 
-    <button id="newUserBtn">New User</button>
-    <button class="button home"> Home </button>
-    <button class="button logout">
+     <button class="button logout">
       <a href="/">Logout</a>
     </button>
-
+    <button id="newUserBtn">New User</button>
+    <button class="button home"> Home </button>
   </div>
 
   <!-- SCRIPTS -->
@@ -61,20 +60,6 @@
     $("#newUserBtn").on("click", function (event) {
       event.preventDefault();
       location.href = "/createUser";
-    });
-
-    $.ajax({
-      url: "/api/users",
-      method: "GET",
-    }).then(function (res) {
-      var my_user_id = sessionStorage.user_id;
-      res.forEach(function (user) {
-        var option = $("<option>").val(user.user_id).text(user.user_id);
-        if (my_user_id == option.val()) {
-          option.attr("selected", "selected");
-        }
-        $("#userSelection").append(option);
-      })
     });
 
     function moveToHomePage(userID) {
