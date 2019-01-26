@@ -47,10 +47,6 @@ module.exports = function (app) {
     db.Users.findOne({ where: { user_id: userId } }).then(function (user) {
       db.Positions.findAll({ where: { user_id: userId }, include: [Users] }).then(function (records) {
         res.render("index", {
-
-          
-
-
           user_id: user.get("user_id"),
           name: user.get("name"),
           budget: user.get("budget"),
@@ -165,7 +161,10 @@ module.exports = function (app) {
         } else {
           changePosition(userPositions[0], 1, buying);
         }
-        res.json(userPositions[0]);
+        res.json({ position : userPositions[0],
+            budget : user.budget
+        
+        });
       });
     });
   });

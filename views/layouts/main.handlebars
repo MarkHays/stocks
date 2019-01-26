@@ -189,7 +189,8 @@
           quantity: 1
         }
       }).then(function (res) {
-         parent.children(".shareCount").text(res.quantity);
+         parent.children(".shareCount").text(res.position.quantity);
+         $("#investAmount").text(res.budget);
       });
     };
   </script>
