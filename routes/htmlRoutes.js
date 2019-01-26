@@ -22,7 +22,6 @@ module.exports = function (app) {
   });
 
   app.get("/stocks/:symbol", function (req,res){
-    console.log("f");
     var symbol = req.params.symbol;
     res.render("stockPage", {
       symbol : symbol

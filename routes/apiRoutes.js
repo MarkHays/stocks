@@ -28,9 +28,22 @@ module.exports = function (app) {
   });
 
   //get position for speicific user_id
-  app.get("/api/positions/:user_id", function (req, res) {
-    var userId = req.params.user_id
+  var userId = "";
 
+  app.post("/loginUser", function(req,res){
+      if (req.body.userId === "") throw "USER ID CANNOT BE SET TO EMPTY THROUGH THIS METHOD";
+      userId = req.body.userId;
+      res.json({success : true});
+  });
+
+
+  app.post("/logoutUser", function(req,res){
+    userId = "";
+    res.json({success : true});
+});
+  app.get("/index", function (req, res) {
+
+    if (userId === "") throw "USER ID IS EMPTY";
     db.Users.findOne({ where: { user_id: userId } }).then(function (user) {
       db.Positions.findAll({ where: { user_id: userId }, include: [Users] }).then(function (records) {
         res.render("index", {
@@ -148,6 +161,10 @@ module.exports = function (app) {
         } else {
           changePosition(userPositions[0], 1, buying);
         }
+        res.json({ position : userPositions[0],
+            budget : user.budget
+        
+        });
       });
     });
   });
