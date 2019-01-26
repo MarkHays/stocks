@@ -78,19 +78,24 @@
 
     //mdbootstrap library already loaded in main page.
     //to draw char, it will require a canavs tag lineChart, then call js function drawChart(["fb","aapl","tsla"]);  
-    function drawChart(symbols) {
+    function drawChart(symbols, period) {
 
-      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=6m", method: "get" })
+      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=" + period, method: "get" })
         .then(function (result) {
           data = [];
           count = 0;
+          interval = {
+            "1y": 30,
+            "1m": 3,
+            "6m": 15
+          }
           for (var symbol in result) {
             dates = [];
             prices = [];
             borderOpac = 1;
             bgColor = 0.2;
             chartItems = result[symbol].chart;
-            for (var i = 0; i < chartItems.length; i += 15) {
+            for (var i = 0; i < chartItems.length; i += interval[period]) {
               dates.push(chartItems[i].date);
               prices.push(chartItems[i].close);
             };
