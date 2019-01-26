@@ -21,16 +21,15 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/stocks/:symbol", function (req,res){
-    console.log("f");
+  app.get("/stocks/:symbol/:user_id", function (req,res){
     var symbol = req.params.symbol;
     res.render("stockPage", {
       symbol : symbol
     });
   });
-
+  
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {
     res.render("404");
   });
-};
+}

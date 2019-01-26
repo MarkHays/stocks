@@ -1,6 +1,6 @@
 <div id="home">
 
-    <div class = "stocksContainer">
+    <div class="stocksContainer">
 
         <div class="row">
             <div class="col-8 offset-2">
@@ -17,11 +17,16 @@
                 <button id="1y" value="1y">Last Year</button>
             </div>
             <div class="col-8 offset-2">
-                
 
-                <div id="symbol">{{symbol}}</div>
-                <button class="float-right tradeButton">Sell</button>
-                <button class="float-right tradeButton">Buy</button>
+                <div>
+                    <h3 class="stockSymbol">{{symbol}}</h3>
+                    <h5>Shares: <h6 class="shareCount numberofShares">{{quantity}}</h6>
+                    </h5>
+                    <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
+                    <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
+                    <hr>
+                </div>
+
 
             </div>
 
@@ -119,9 +124,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -130,21 +132,22 @@
 
 
 <script>
-    console.log($("#symbol").text());
-    drawChart([$("#symbol").text()],"1m");
+
+    var symbol = $(".stockSymbol").text();
+    drawChart([symbol], "1m");
     var quote = "";
     var period = "";
 
-    $("#1m").on("click",function(event){drawChart([$("#symbol").text()],$("#1m").val())});
-    $("#6m").on("click",function(event){drawChart([$("#symbol").text()],$("#6m").val())});
-    $("#1y").on("click",function(event){drawChart([$("#symbol").text()],$("#1y").val())});
+    $("#1m").on("click",function(event){drawChart([$(".stockSymbol").text()],$("#1m").val(),$("#1m").val())});
+    $("#6m").on("click",function(event){drawChart([$(".stockSymbol").text()],$("#6m").val(),$("#6m").val())});
+    $("#1y").on("click",function(event){drawChart([$(".stockSymbol").text()],$("#1y").val(),$("#1y").val())});
     
     $.ajax({
-        url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/quote",
+        url: "https://api.iextrading.com/1.0/stock/" + symbol + "/quote",
         method: "GET",
     }).then(function (response) {
         quote = response;
-        console.log(quote);
+
         $("#vol").text(quote.latestVolume);
         $("#avgVol").text(quote.avgTotalVolume);
         $("#mktCap").text((quote.marketCap / 1000000) + " M");
@@ -155,44 +158,35 @@
         $("#low").text(quote.low);
         $("#52wkhigh").text(quote.week52High);
         $("#52wklow").text(quote.week52Low);
-    });
 
-
-    $(".tradeButton").on("click", function (event) {
-        event.preventDefault();
-        var buying = true;
-       
-        if ($(this).text() === "Sell") buying = false;
         $.ajax({
-            url: "https://api.iextrading.com/1.0/stock/" + $("#symbol").text() + "/price",
+            url: "/data",
             method: "GET",
-            statusCode: {
-                "404": function () {
-                    location.href = "*";
-                }
+        }).then(function (data) {
+
+            $("#investAmount").text(data.budget);
+
+            var position = data.positions.find(function (element) {
+                return element.symbol === symbol;
+            })
+
+            if (position === undefined) {
+                $(".shareCount").text(0);
+            } else {
+                $(".shareCount").text(position.quantity);
             }
-        }).then(function (response) {
-            processPurchase(response, buying);
+
+
+
+
         });
+
+
     });
 
-    function processPurchase(purchasedata, buying) {
-         console.log($(this).text());
-        $.ajax({
-            url: "/api/purchase/",
-            method: "POST",
-            data: {
-                user_id: $("#userSelection").val(),
-                symbol: $("#symbol").text(),
-                price: purchasedata,
-                buying, buying,
-                quantity: 1
 
-            }
-        }).then(function (res) {
 
-            console.log(res);
-        });
-    };
+    $(".tradeButton").on("click", sendPurchaseRequest);
+
 
 </script>

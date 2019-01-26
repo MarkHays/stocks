@@ -17,19 +17,23 @@
         <hr>
         <div>
           {{#each positions}}
-          <h3 class="stockSymbol">{{symbol}}</h3>
-          <h5 class="numberofShares">Shares: {{quantity}}</h5>
-          <button id="price{{symbol}}" class="button">Buy</button><br><br>
-          <button id="sell{{symbol}}" class="button">Sell</button>
-          <hr>
+          <div class = "position">
+            <h3 class="stockSymbol">{{symbol}}</h3>
+            <h5>Shares: <h6 class="shareCount numberofShares">{{quantity}}</h6>
+            </h5>
+            <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
+            <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
+            <hr>
+          </div>
+
           {{/each}}
         </div>
-         <label for="inputName">
+        <label for="inputName">
           <h5>Add Stock</h5>
         </label>
         <input type="text" id="symbol" placeholder="Search...">
 
-        <button id="tradeButton" class="button">Q</button>
+        <button id="searchButton" class="button">Q</button>
 
       </div>
     </div>
@@ -42,24 +46,25 @@
 
 
 <script>
-
-    $("#tradeButton").on("click", function (event) {
-        event.preventDefault();
-        var userId = $("#userSelection").val();
-        var symbol = $("#symbol").val();
-    
-        $.ajax({
-            url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
-            method: "GET",
-            statusCode: {
-                "404": function () {
-                    location.href = "*";
-                }
-            }
-        }).then(function (response) {
-          console.log(response);
-            location.href = "/stocks/" + symbol;
-        });
-    });
  
+
+  $(".tradeButton").on("click", sendPurchaseRequest);
+
+  $("#searchButton").on("click", function (event) {
+    event.preventDefault();
+    var userId = $("#userSelection").val();
+    var symbol = $("#symbol").val();
+    $.ajax({
+      url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
+      method: "GET",
+      statusCode: {
+        "404": function () {
+          location.href = "*";
+        }
+      }
+    }).then(function (response) {
+      location.href = "/stocks/" + symbol + "/" + sessionStorage.getItem("user_id");
+    });
+  });
+
 </script>
