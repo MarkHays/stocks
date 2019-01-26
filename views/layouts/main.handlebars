@@ -20,11 +20,13 @@
 <body>
   <div class="header">
     <h1 id="headerTitle">Stock X</h1>
-    <ul>
-      <li><a class="navBar" href="../stocks/:symbol">Stocks</a></li>
-      <li><a class="navBar" href="../createUser">New User</a></li>
-      <li><a class="navBar" href="../">Home</a></li>
-    </ul>
+
+    <button id="newUserBtn">New User</button>
+    <button class="button home"> Home </button>
+    <button class="button logout">
+      <a href="/">Logout</a>
+    </button>
+
   </div>
 
   <!-- SCRIPTS -->
@@ -37,29 +39,73 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="/bootstrap/js/mdb.min.js"></script>
 
-
   <script>
+
+
+    $(".logout").on("click", function (event) {
+      event.preventDefault();
+      $.ajax({
+        url: "/logoutUser",
+        method: "POST"
+      }).then(function () {
+        sessionStorage.setItem("user_id","");
+        location.href = "/";
+      });
+    });
+
+    $(".home").on("click", function (event) {
+      event.preventDefault();
+      window.moveToHomePage(sessionStorage.getItem("user_id"));
+    });
+
+    $("#newUserBtn").on("click", function (event) {
+      event.preventDefault();
+      location.href = "/createUser";
+    });
+
+    $.ajax({
+      url: "/api/users",
+      method: "GET",
+    }).then(function (res) {
+      var my_user_id = sessionStorage.user_id;
+      res.forEach(function (user) {
+        var option = $("<option>").val(user.user_id).text(user.user_id);
+        if (my_user_id == option.val()) {
+          option.attr("selected", "selected");
+        }
+        $("#userSelection").append(option);
+      })
+    });
+
+    function moveToHomePage(userID) {
+      $.ajax({
+
+        url: "/loginUser",
+        method: "POST",
+        data: {
+          userId: userID
+        }
+      }).then(function () {
+        location.href = "/index";
+      });
+    }
+
+
     //mdbootstrap library already loaded in main page.
     //to draw char, it will require a canavs tag lineChart, then call js function drawChart(["fb","aapl","tsla"]);  
-    function drawChart(symbols, period) {
+    function drawChart(symbols) {
 
-      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=" + period, method: "get" })
+      $.ajax({ url: "https://api.iextrading.com/1.0/stock/market/batch?symbols=" + symbols.join(",") + "&types=quote,news,chart&range=6m", method: "get" })
         .then(function (result) {
-          console.log(result);
           data = [];
           count = 0;
-          interval = {
-            "1y": 30,
-            "1m": 3,
-            "6m": 15
-          }[period]
           for (var symbol in result) {
             dates = [];
             prices = [];
             borderOpac = 1;
             bgColor = 0.2;
             chartItems = result[symbol].chart;
-            for (var i = 0; i < chartItems.length; i += interval) {
+            for (var i = 0; i < chartItems.length; i += 15) {
               dates.push(chartItems[i].date);
               prices.push(chartItems[i].close);
             };
@@ -108,6 +154,45 @@
 
     //use this function update linechart.
     //drawChart(["fb","aapl","tsla"]);   
+
+
+    function sendPurchaseRequest(event) {
+      event.preventDefault();
+      var parent = $(this).parent();
+      var buying = true;
+      var symbol = parent.children(".stockSymbol").text();
+      if ($(this).text() === "Sell") buying = false;
+      $.ajax({
+        url: "https://api.iextrading.com/1.0/stock/" + symbol + "/price",
+        method: "GET",
+        statusCode: {
+          "404": function () {
+            location.href = "*";
+          }
+        }
+      }).then(function (response) {
+        processPurchase(parent,response, buying, symbol);
+      });
+
+    };
+
+    function processPurchase(parent,purchasedata, buying, symbol) {
+     
+      $.ajax({
+        url: "/api/purchase/",
+        method: "POST",
+        data: {
+          user_id: sessionStorage.getItem("user_id"),
+          symbol: symbol,
+          price: purchasedata,
+          buying, buying,
+          quantity: 1
+        }
+      }).then(function (res) {
+         parent.children(".shareCount").text(res.position.quantity);
+         $("#investAmount").text(res.budget);
+      });
+    };
   </script>
   {{{body}}}
 
