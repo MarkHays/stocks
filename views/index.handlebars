@@ -63,7 +63,7 @@
         }
       }
     }).then(function (response) {
-      location.href = "/stocks/" + symbol;
+      location.href = "/stocks/" + symbol + "/" + sessionStorage.getItem("user_id");
     });
   });
 
