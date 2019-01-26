@@ -48,7 +48,7 @@
         url: "/logoutUser",
         method: "POST"
       }).then(function () {
-        sessionStorage.setItem("user_id","");
+        sessionStorage.setItem("user_id", "");
         location.href = "/";
       });
     });
@@ -157,13 +157,13 @@
           }
         }
       }).then(function (response) {
-        processPurchase(parent,response, buying, symbol);
+        processPurchase(parent, response, buying, symbol);
       });
 
     };
 
-    function processPurchase(parent,purchasedata, buying, symbol) {
-     
+    function processPurchase(parent, purchasedata, buying, symbol) {
+
       $.ajax({
         url: "/api/purchase/",
         method: "POST",
@@ -175,8 +175,17 @@
           quantity: 1
         }
       }).then(function (res) {
-         parent.children(".shareCount").text(res.position.quantity);
-         $("#investAmount").text(res.budget);
+
+        var classes = parent.attr("class");
+
+
+        if (res.position.quantity === 0 && classes === "position") {
+          parent.remove();
+        } else {
+          parent.children(".shareCount").text(res.position.quantity);
+        }
+        $("#investAmount").text(res.budget);
+
       });
     };
   </script>

@@ -105,10 +105,10 @@ module.exports = function (app) {
     if (buying) i = 1;
     var budget = user.budget;
     var newBudget = budget - i * price;
-    var newQuantity = 0;
+    var newQuantity = -1;
 
     if (position === undefined) {
-      newQuantity = quantity;
+      newQuantity = i * quantity;
     } else {
       newQuantity = position.quantity + i * quantity;
     }
@@ -140,6 +140,7 @@ module.exports = function (app) {
 
   async function updatePositions(position, user, newQuantity, newBudget) {
 
+    
     user.budget = newBudget;
     position.quantity = newQuantity;
     position.save().then(user.save().then(function () {
@@ -173,7 +174,7 @@ module.exports = function (app) {
         changePosition(resolve, data.user, price, position, 1, buying, symbol)
 
       }).then(function (position) {
-        console.log("f");
+     
         res.json({
           position: position,
           budget: data.user.budget
