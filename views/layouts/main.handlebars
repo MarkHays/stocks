@@ -47,7 +47,7 @@
         url: "/logoutUser",
         method: "POST"
       }).then(function () {
-        sessionStorage.setItem("user_id","");
+        sessionStorage.setItem("user_id", "");
         location.href = "/";
       });
     });
@@ -60,20 +60,6 @@
     $("#newUserBtn").on("click", function (event) {
       event.preventDefault();
       location.href = "/createUser";
-    });
-
-    var users = $.ajax({
-      url: "/api/users",
-      method: "GET",
-    }).then(function (res) {
-      var my_user_id = sessionStorage.user_id;
-      res.forEach(function (user) {
-        var option = $("<option>").val(user.user_id).text(user.user_id);
-        if (my_user_id == option.val()) {
-          option.attr("selected", "selected");
-        }
-        $("#userSelection").append(option);
-      })
     });
 
     function moveToHomePage(userID) {
@@ -175,13 +161,13 @@
           }
         }
       }).then(function (response) {
-        processPurchase(parent,response, buying, symbol);
+        processPurchase(parent, response, buying, symbol);
       });
 
     };
 
-    function processPurchase(parent,purchasedata, buying, symbol) {
-     
+    function processPurchase(parent, purchasedata, buying, symbol) {
+
       $.ajax({
         url: "/api/purchase/",
         method: "POST",
@@ -193,8 +179,17 @@
           quantity: 1
         }
       }).then(function (res) {
-         parent.children(".shareCount").text(res.position.quantity);
-         $("#investAmount").text(res.budget);
+
+        var classes = parent.attr("class");
+
+
+        if (res.position.quantity === 0 && classes === "position") {
+          parent.remove();
+        } else {
+          parent.children(".shareCount").text(res.position.quantity);
+        }
+        $("#investAmount").text(res.budget);
+
       });
     };
   </script>

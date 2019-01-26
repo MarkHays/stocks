@@ -12,6 +12,7 @@ module.exports = function (app) {
 
   app.post("/api/users", function (req, res) {
     var user = req.body;
+
     db.Users.findOne({where:{user_id: user.user_id}}).then(function(foundUser){
       if(foundUser){
         res.status(400).send("User_id already Exists.");
@@ -24,7 +25,7 @@ module.exports = function (app) {
         });
       }
     })
-    
+
   });
 
   // get all positions for fun!
@@ -34,145 +35,157 @@ module.exports = function (app) {
     });
   });
 
+  app.get("/api/user/get", function (req, res) {
+    if (userId === "") throw "EMPTY USER";
+    db.Users.findOne({ where: { user_id: userId } }).then(function (user) {
+      res.json(user);
+    });
+
+  });
+
   //get position for speicific user_id
   var userId = "";
 
-  app.post("/loginUser", function(req,res){
-      if (req.body.userId === "") throw "USER ID CANNOT BE SET TO EMPTY THROUGH THIS METHOD";
-      userId = req.body.userId;
-      res.json({success : true});
+  app.post("/loginUser", function (req, res) {
+    if (req.body.userId === "") throw "USER ID CANNOT BE SET TO EMPTY THROUGH THIS METHOD";
+    userId = req.body.userId;
+    res.json({ success: true });
   });
 
 
-  app.post("/logoutUser", function(req,res){
+  app.post("/logoutUser", function (req, res) {
     userId = "";
-    res.json({success : true});
-});
+    res.json({ success: true });
+  });
+
+
   app.get("/index", function (req, res) {
 
     if (userId === "") throw "USER ID IS EMPTY";
+
+    new Promise(getUserData).then(function (user) {
+
+      res.render("index", user);
+    });
+
+  });
+
+  app.get("/data", function (req, res) {
+
+    new Promise(getUserData).then(function (user) {
+      res.json(user);
+    });
+  });
+
+  function getUserData(resolve, reject) {
     db.Users.findOne({ where: { user_id: userId } }).then(function (user) {
       db.Positions.findAll({ where: { user_id: userId }, include: [Users] }).then(function (records) {
-        res.render("index", {
+        resolve({
+          user: user,
           user_id: user.get("user_id"),
           name: user.get("name"),
           budget: user.get("budget"),
           positions: records
         });
-
       });
     });
-  });
+  }
 
-  function enterNewPosition(user, quantity, symbol) {
+
+  function enterNewPosition(resolve, user, quantity, symbol) {
     if (quantity < 1) {
-      throw "ILLEGAL TRANSATION";
+      throw "ILLEGAL TRANSACTION";
     }
     Positions.create({
       user_id: user.user_id,
       symbol: symbol,
       quantity: quantity
+    }).then(function (position) {
+      resolve(position);
     });
   }
 
-  function changePosition(position, quantity, buying) {
+  function changePosition(res, user, price, position, quantity, buying, symbol) {
     var i = -1;
     if (buying) i = 1;
-
-    var newQuantity = position.quantity + i * quantity;
-
-    if (newQuantity < 0) {
-      console.log("not enough shares");
-    } else {
-      position.quantity += i * quantity;
-    }
-
-    if (position.quantity === 0) {
-      Positions.destroy({
-        where: {
-          user_id: position.user_id,
-          symbol: position.symbol
-        }
-      })
-    } else {
-      position.save().then(function () {
-        console.log("new position is " + position.quantity + " shares of " + position.symbol);
-      });
-    }
-  }
-
-  function changeMoney(user, price, b) {
-    var i = 1;
-
-    if (b) {
-      i = -1;
-    }
     var budget = user.budget;
-    var newBudget = budget + i * price;
+    var newBudget = budget - i * price;
+    var newQuantity = -1;
 
+    if (position === undefined) {
+      newQuantity = i * quantity;
+    } else {
+      newQuantity = position.quantity + i * quantity;
+    }
+
+    console.log(newQuantity + " " + newBudget);
 
     if (newBudget < 0) {
-
-      console.log("you cant afford that");
+      console.log("not enough money");
+      res(position);
+    } else if (newQuantity < 0) {
+      console.log("not enough shares");
+      res(position);
     } else {
-      user.budget = newBudget
-    }
-    user.save().then(function () {
-      console.log("new budget is " + user.budget);
-    });
 
+      new Promise(function (resolve, reject) {
+        if (position === undefined) {
+          enterNewPosition(resolve, user, newQuantity, symbol);
+        } else {
+          resolve(position);
+        }
+      }).then(function (newPosition) {
+        updatePositions(newPosition, user, newQuantity, newBudget);
+        res(newPosition);
+
+      });
+
+    }
   }
 
-  app.post("/api/develop/reset/", function (req, res) {
-    Users.destroy({ where: {}, truncate: true });
-    Positions.destroy({ where: {}, truncate: true });
+  async function updatePositions(position, user, newQuantity, newBudget) {
 
-    Users.create({
-      user_id: "f",
-      budget: 300
-    });
-    Positions.create({
-      user_id: "f",
-      symbol: "aapl",
-      quantity: 1
-    });
-    console.log("reset complete")
-  });
+    
+    user.budget = newBudget;
+    position.quantity = newQuantity;
+    position.save().then(user.save().then(function () {
+      console.log("new position is " + newQuantity + " shares of " + position.symbol);
+      console.log("balance is " + newBudget);
+      if (newQuantity === 0) {
+        Positions.destroy({
+          where: {
+            user_id: position.user_id,
+            symbol: position.symbol
+          }
+        });
+      }
+    }));
+  }
+
 
   app.post("/api/purchase/", function (req, res) {
 
     var body = req.body;
     var symbol = body.symbol;
     var price = body.price;
-    var user_id = body.user_id;
     var buying = body.buying == 'true';
+    new Promise(getUserData).then(function (data) {
 
-    Users.findAll({
-      where: {
-        user_id: user_id
-      }
-    }).then(function (users) {
-      var user = users[0];
+      var position = data.positions.find(function (element) {
+        return element.symbol === symbol;
+      });
 
-      changeMoney(user, price, buying);
+      new Promise(function (resolve, reject) {
+        changePosition(resolve, data.user, price, position, 1, buying, symbol)
 
-      Positions.findAll({
-        where: {
-          user_id: user_id,
-          symbol: symbol
-        }
-      }).then(function (userPositions) {
-
-        if (userPositions.length === 0) {
-          enterNewPosition(user, 1, symbol);
-        } else {
-          changePosition(userPositions[0], 1, buying);
-        }
-        res.json({ position : userPositions[0],
-            budget : user.budget
-        
+      }).then(function (position) {
+     
+        res.json({
+          position: position,
+          budget: data.user.budget
         });
       });
+
     });
   });
 

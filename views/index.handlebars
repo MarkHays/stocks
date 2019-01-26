@@ -17,9 +17,10 @@
         <hr>
         <div>
           {{#each positions}}
-          <div>
+          <div class = "position">
             <h3 class="stockSymbol">{{symbol}}</h3>
-            <h5 class="shareCount numberOfShares">Shares: {{quantity}}</h5>
+            <h5>Shares: <h6 class="shareCount numberofShares">{{quantity}}</h6>
+            </h5>
             <button id="price{{symbol}}" class="tradeButton button">Buy</button><br><br>
             <button id="sell{{symbol}}" class="tradeButton button">Sell</button>
             <hr>
@@ -45,6 +46,8 @@
 
 
 <script>
+ 
+
   $(".tradeButton").on("click", sendPurchaseRequest);
 
   $("#searchButton").on("click", function (event) {
