@@ -137,13 +137,13 @@
     var symbol = $(".stockSymbol").text();
     console.log(symbol);
 
-    drawChart([symbol]);
+    drawChart([symbol],"1m");
     var quote = "";
     var period = "";
 
-    $("#1m").on("click",function(event){drawChart([$("#symbol").text()],$("#1m").val())});
-    $("#6m").on("click",function(event){drawChart([$("#symbol").text()],$("#6m").val())});
-    $("#1y").on("click",function(event){drawChart([$("#symbol").text()],$("#1y").val())});
+    $("#1m").on("click",function(event){drawChart([$(".stockSymbol").text()],$("#1m").val(),$("#1m").val())});
+    $("#6m").on("click",function(event){drawChart([$(".stockSymbol").text()],$("#6m").val(),$("#6m").val())});
+    $("#1y").on("click",function(event){drawChart([$(".stockSymbol").text()],$("#1y").val(),$("#1y").val())});
     
     $.ajax({
         url: "https://api.iextrading.com/1.0/stock/" + symbol + "/quote",
