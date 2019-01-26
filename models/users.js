@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
                       primaryKey:true
                     },
                     name: DataTypes.STRING,
-                    budget: DataTypes.INTEGER
+                    budget: DataTypes.FLOAT
         },{
           timestamps : false
         });
