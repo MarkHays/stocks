@@ -72,7 +72,8 @@
         }
       }).then(function () {
         location.href = "/index";
-      });
+      }).catch(function(error){
+        location.href = "/"});
     }
 
 
