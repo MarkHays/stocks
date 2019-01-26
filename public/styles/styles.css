@@ -194,6 +194,11 @@ h1, h5 {
   top: 50px;
 }
 
+#submitNewUser, #cancel {
+  width: 115px;
+  height: 40px;
+}
+
 /* submit button */
 #submitNewUser {
   font-family: sans-serif;
