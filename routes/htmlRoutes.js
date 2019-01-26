@@ -21,13 +21,29 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/stocks/:symbol", function (req,res){
+  app.get("/stocks/:symbol/:user_id", function (req,res){
     var symbol = req.params.symbol;
-    res.render("stockPage", {
-      symbol : symbol
-    });
+    var user_id = req.params.user_id;
+    console.log(req.params);
+    db.Users.findOne({where: {user_id: user_id}}).then(function(user){
+      if(user){
+        db.Positions.findOne({where:{user_id: user_id, symbol: symbol}}).then(function(position){
+          var quantity = 0;
+          if(position){
+            quantity = position.quantity;
+          }
+          
+          res.render("stockPage", {
+            symbol : symbol,
+            budget : user.budget,
+            quantity : quantity
+          });        
+        })
+      }
+    })
+    
   });
-
+  
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {
     res.render("404");

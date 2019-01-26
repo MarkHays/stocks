@@ -5,15 +5,16 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link href="/bootstrap/css/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+  
   <!-- Your custom styles (optional) -->
-  <link href="/bootstrap/css/style.css" rel="stylesheet">
+  <!--link href="/bootstrap/css/style.css" rel="stylesheet"-->
   <title>Home Page</title>
 </head>
 
@@ -23,9 +24,7 @@
 
     <button id="newUserBtn">New User</button>
     <button class="button home"> Home </button>
-    <button class="button logout">
-      <a href="/">Logout</a>
-    </button>
+    <button class="button logout">Logout</button>
 
   </div>
 
@@ -62,7 +61,8 @@
       event.preventDefault();
       location.href = "/createUser";
     });
-    $.ajax({
+
+    var users = $.ajax({
       url: "/api/users",
       method: "GET",
     }).then(function (res) {
