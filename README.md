@@ -20,4 +20,4 @@ Users may get started by clicking on the deployed link below, which will lead to
 [GitHub](https://github.com/MarkHays/stocks)
 
 ## Deployed Link
-[Heroku]
+[Heroku](https://lit-thicket-39018.herokuapp.com/)
